@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Form, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from api.schemas import *
@@ -12,24 +12,24 @@ auth_scheme = HTTPBearer()
 
 
 @router.post("/register", response_model=DetailResponse)
-async def register_user(username: str, password: str):
-    if await get_user(username=username):
+async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(...)
+    if await get_user(username=data.username):
         raise HTTPException(
             status_code=400, detail='This username is already taken')
 
-    await create_user(username=username, password=password)
+    await create_user(username=data.username, password=data.password)
 
     return DetailResponse(detail='Successfully registered')
 
 
 @router.post("/login", response_model=LoginResponse)
-async def login(username: str, password: str):
-    user = await get_user(username)  # Получите пользователя из базы данных
+async def login(data: LoginRequest):
+    user = await get_user(data.username)  # Получите пользователя из базы данных
     if not user:
         raise HTTPException(
             status_code=400, detail="Incorrect username or password")
 
-    is_password_correct = pwd_context.verify(password, user.password)
+    is_password_correct = pwd_context.verify(data.password, user.password)
 
     if not is_password_correct:
         raise HTTPException(

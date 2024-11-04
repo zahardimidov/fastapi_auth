@@ -1,12 +1,14 @@
-from passlib.context import CryptContext
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
+
 import jwt
+from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 SECRET_KEY = "my_secret_key"
 ALGORITHM = "HS256"
 EXPIRATION_TIME = timedelta(minutes=30)
+
 
 def create_jwt_token(data: dict):
     expiration = datetime.now(timezone.utc) + EXPIRATION_TIME

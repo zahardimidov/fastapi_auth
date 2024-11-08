@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from fastapi import HTTPException
 from pydantic import BaseModel, Field, field_validator
 
 # REQUESTS
@@ -17,9 +18,11 @@ class RegisterRequest(BaseModel):
     @field_validator("password", mode='before')
     def validate_password(cls, value: str):
         if not any([i.isdigit() for i in value]):
-            raise ValidationError("Password must include numbers")
+            raise HTTPException(
+                status_code=400, detail="Password must include numbers")
         if not any([i.isalpha() for i in value]):
-            raise ValidationError("Password must include letters")
+            raise HTTPException(
+                status_code=400, detail="Password must include letters")
         return value
 
 # RESPONSES
@@ -33,7 +36,3 @@ class UserResponse(BaseModel):
 class LoginResponse(BaseModel):
     access_token: str
     token_type: str = 'bearer'
-
-
-class ValidationError(Exception):
-    ...

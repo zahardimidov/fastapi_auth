@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Request, Response
-from fastapi.encoders import jsonable_encoder
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 
-from api import auth_router, schemas
+from api import auth_router
 from config import PORT
 from database.admin import init_admin
 from database.session import engine, run_database
@@ -36,11 +35,6 @@ async def ping():
 @app.get('/', response_class=HTMLResponse, include_in_schema=False)
 async def home():
     return f'<div style="display: flex; width: 100vw; height: 100vh; justify-content: center; background-color: #F9F9F9; color: #03527E;"> <b style="margin-top:35vh">Welcome!</b> </div>'
-
-
-@app.exception_handler(schemas.ValidationError)
-async def validation_error_handler(request: Request, exc: schemas.ValidationError):
-    return JSONResponse(jsonable_encoder(dict(detail=str(exc))), status_code=400)
 
 if __name__ == "__main__":
     import uvicorn

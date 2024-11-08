@@ -10,8 +10,11 @@ from ext import create_jwt_token, pwd_context, verify_jwt_token
 router = APIRouter(prefix='/auth')
 auth_scheme = HTTPBearer()
 
+responses = {
+    400: {"model": ErrorResponse}
+}
 
-@router.post("/register", response_model=DetailResponse)
+@router.post("/register", response_model=DetailResponse, responses=responses)
 async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(...)
     if await get_user(username=data.username):
         raise HTTPException(
@@ -22,7 +25,7 @@ async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(..
     return DetailResponse(detail='Successfully registered')
 
 
-@router.post("/login", response_model=LoginResponse)
+@router.post("/login", response_model=LoginResponse, responses=responses)
 async def login(data: LoginRequest):
     user = await get_user(data.username)  # Получите пользователя из базы данных
     if not user:
@@ -49,6 +52,6 @@ async def get_current_user(token: HTTPAuthorizationCredentials = Depends(auth_sc
     return user
 
 
-@router.get("/me", response_model=UserResponse)
+@router.get("/me", response_model=UserResponse, responses=responses)
 async def get_user_me(current_user: User = Depends(get_current_user)):
     return current_user

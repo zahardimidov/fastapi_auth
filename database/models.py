@@ -20,6 +20,8 @@ class Base(AsyncAttrs, DeclarativeBase):
 class User(Base):
     __tablename__ = 'users'
 
+    id = mapped_column(String, default=generate_uuid, primary_key=True)
+
     username = mapped_column(String(50), nullable=False, primary_key=True)
     _password = mapped_column("password", String(100), nullable=False)
 

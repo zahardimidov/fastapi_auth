@@ -4,7 +4,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from api.schemas import *
 from database.models import User
-from database.requests import create_user, get_user
+from database.requests import create_user, get_user_by_id, get_user_by_username
 from ext import create_jwt_token, pwd_context, verify_jwt_token
 
 router = APIRouter(prefix='/auth')
@@ -16,7 +16,7 @@ responses = {
 
 @router.post("/register", response_model=DetailResponse, responses=responses)
 async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(...)
-    if await get_user(username=data.username):
+    if await get_user_by_username(username=data.username):
         raise HTTPException(
             status_code=400, detail='This username is already taken')
 
@@ -27,7 +27,7 @@ async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(..
 
 @router.post("/login", response_model=LoginResponse, responses=responses)
 async def login(data: LoginRequest):
-    user = await get_user(data.username)  # Получите пользователя из базы данных
+    user = await get_user_by_username(data.username)  # Получите пользователя из базы данных
     if not user:
         raise HTTPException(
             status_code=400, detail="Incorrect username or password")
@@ -37,7 +37,7 @@ async def login(data: LoginRequest):
     if not is_password_correct:
         raise HTTPException(
             status_code=400, detail="Incorrect username or password")
-    jwt_token = create_jwt_token({"sub": user.username})
+    jwt_token = create_jwt_token({"sub": user.id})
     return LoginResponse(access_token=jwt_token)
 
 
@@ -46,7 +46,7 @@ async def get_current_user(token: HTTPAuthorizationCredentials = Depends(auth_sc
     if not decoded_data:
         raise HTTPException(status_code=400, detail="Invalid token")
 
-    user = await get_user(decoded_data["sub"])
+    user = await get_user_by_id(decoded_data["sub"])
     if not user:
         raise HTTPException(status_code=400, detail="User not found")
     return user

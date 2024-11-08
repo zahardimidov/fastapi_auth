@@ -7,7 +7,7 @@ from database.models import User
 from database.requests import create_user, get_user
 from ext import create_jwt_token, pwd_context, verify_jwt_token
 
-router = APIRouter(prefix='/auth', tags=['Авторизация'])
+router = APIRouter(prefix='/auth')
 auth_scheme = HTTPBearer()
 
 

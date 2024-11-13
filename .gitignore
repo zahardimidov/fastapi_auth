@@ -1,5 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 venv/
-database.db
+*.db
 test.py
+.pytest_cache
+htmlcov

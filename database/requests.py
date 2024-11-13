@@ -20,7 +20,8 @@ async def get_user_by_id(id) -> User:
         user = await session.scalar(select(User).where(User.id == id))
 
         return user
-    
+
+
 async def get_user_by_username(username) -> User:
     async with async_session() as session:
         user = await session.scalar(select(User).where(User.username == username))

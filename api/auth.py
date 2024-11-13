@@ -1,5 +1,5 @@
-
-from fastapi import APIRouter, Depends, Form, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.params import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from api.schemas import *
@@ -10,12 +10,9 @@ from ext import create_jwt_token, pwd_context, verify_jwt_token
 router = APIRouter(prefix='/auth')
 auth_scheme = HTTPBearer()
 
-responses = {
-    400: {"model": ErrorResponse}
-}
 
-@router.post("/register", response_model=DetailResponse, responses=responses)
-async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(...)
+@router.post("/register", response_model=DetailResponse)
+async def register_user(data: RegisterRequest):
     if await get_user_by_username(username=data.username):
         raise HTTPException(
             status_code=400, detail='This username is already taken')
@@ -25,9 +22,9 @@ async def register_user(data: RegisterRequest): #data: RegisterRequest = Form(..
     return DetailResponse(detail='Successfully registered')
 
 
-@router.post("/login", response_model=LoginResponse, responses=responses)
+@router.post("/login", response_model=LoginResponse)
 async def login(data: LoginRequest):
-    user = await get_user_by_username(data.username)  # Получите пользователя из базы данных
+    user = await get_user_by_username(data.username)
     if not user:
         raise HTTPException(
             status_code=400, detail="Incorrect username or password")
@@ -52,6 +49,6 @@ async def get_current_user(token: HTTPAuthorizationCredentials = Depends(auth_sc
     return user
 
 
-@router.get("/me", response_model=UserResponse, responses=responses)
+@router.get("/me", response_model=UserResponse)
 async def get_user_me(current_user: User = Depends(get_current_user)):
     return current_user

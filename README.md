@@ -20,3 +20,15 @@ git clone <URL>
 
 docker build -t fastapi_auth:latest .
 docker run -p 127.0.0.1:4500:4500 fastapi_auth:latest
+
+
+### Fast Commit and Push
+
+git add . && git commit -m "commit" && git push
+
+
+### Test Coverage
+ pip install pytest-cov 
+
+ coverage run -m pytest  
+ coverage html && open htmlcov/index.html

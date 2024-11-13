@@ -25,7 +25,8 @@ class User(Base):
     username = mapped_column(String(50), nullable=False, primary_key=True)
     _password = mapped_column("password", String(100), nullable=False)
 
-    registered_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    registered_at = mapped_column(
+        DateTime, default=lambda: datetime.now(timezone.utc))
 
     @hybrid_property
     def password(self):

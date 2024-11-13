@@ -81,10 +81,20 @@ def test_successful_register():
     assert response.json()['detail'] == 'Successfully registered'
 
 
-def test_incorrect_login():
+def test_incorrect_login_password():
     response = client.post('/auth/login', json={
         "username": 'zahardimidov',
         "password": "qwerty"
+    })
+
+    assert response.status_code == 400
+    assert response.json()['detail'] == 'Incorrect username or password'
+
+
+def test_incorrect_login_username():
+    response = client.post('/auth/login', json={
+        "username": 'zahar',
+        "password": "qwerty123"
     })
 
     assert response.status_code == 400
@@ -101,6 +111,12 @@ def test_notauthenticated_me():
     response = client.get('/auth/me')
     assert response.status_code == 403
 
+
+def test_invalid_token_me():
+    response = client.get('/auth/me', headers={
+        'Authorization': 'Bearer ' + 'InvalidToken'
+    })
+    assert response.status_code == 400
 
 def test_authenticated_me():
     token = login('zahardimidov', 'qwerty123')

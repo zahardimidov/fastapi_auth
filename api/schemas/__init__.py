@@ -36,7 +36,6 @@ class RegisterRequest(BaseModel):
 
 class UserResponse(BaseModel):
     username: str
-    registered_at: datetime
 
 
 class LoginResponse(BaseModel):

@@ -1,12 +1,12 @@
-from run import app
-from database.session import run_database
 import asyncio
 import os
 
-from fastapi.testclient import TestClient
-
 os.environ['ENGINE'] = 'sqlite+aiosqlite:///./database/testdb.db'
 
+from fastapi.testclient import TestClient
+
+from database.session import run_database
+from run import app
 
 client = TestClient(app)
 

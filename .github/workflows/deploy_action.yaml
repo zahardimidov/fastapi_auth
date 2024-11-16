@@ -40,8 +40,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Set this secret in your repository settings
-          password: ${{ secrets.DOCKER_PASSWORD }}  # Set this secret in your repository settings
+          username: ${{ secrets.DOCKER_LOGIN }}  # Set this secret in your repository settings
+          password: ${{ secrets.DOCKER_PWD }}  # Set this secret in your repository settings
 
       # Build the Docker image
       - name: Build Docker image

@@ -71,7 +71,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin && docker pull zahardimidov/fastapi_auth:latest && docker run -d zahardimidov/fastapi_auth:latest
-            ls -la
+            echo "${DOCKER_PWD}" | docker login -u "${DOCKER_LOGIN}" --password-stdin
+            docker pull zahardimidov/fastapi_auth:latest
+            docker run -d zahardimidov/fastapi_auth:latest
 
 

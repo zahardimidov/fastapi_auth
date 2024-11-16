@@ -90,10 +90,14 @@ To create and set up an SSH key for accessing an existing server:
 
 ## CI/CD
 git push --force origin deploy
+git add .
+git commit -m "fix"
+git push
 git checkout deploy
 git pull origin main
 git push origin deploy
 git checkout main
 
 
+git add . && git commit -m "fix" && git push 
 git checkout deploy && git pull origin main && git push origin deploy && git checkout main

@@ -8,6 +8,7 @@ This document provides instructions for setting up the FastAPI Authentication pr
 - [Setup Server](#setup-server)
 - [Test Coverage](#test-coverage)
 - [Create SSH Key for Existing Server](#create-ssh-key-for-existing-server)
+- [CI/CD](#ci-cd)
 
 ## Setup Environment
 
@@ -85,3 +86,7 @@ To create and set up an SSH key for accessing an existing server:
 
 6. To connect via SSH using your private key, run:
 <code>ssh -i /path/to/your/private/key/id_rsa username@hostname</code>
+
+
+## CI/CD
+git push --force origin deploy

@@ -7,4 +7,4 @@ load_dotenv()
 PORT = 4000
 ENGINE = os.environ['ENGINE']
 ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD = 'qwerty'
+ADMIN_PASSWORD = 'qwerty' 

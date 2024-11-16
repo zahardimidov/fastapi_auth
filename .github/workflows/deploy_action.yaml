@@ -66,7 +66,7 @@ jobs:
         env:
           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
           DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
-        run: ssh -i id_rsa root@94.198.217.245 "echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin && docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed
+        run: ssh -i id_rsa root@94.198.217.245 "ls -la" #"echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin && docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed
 
       - name: Show files
         run: ls -la

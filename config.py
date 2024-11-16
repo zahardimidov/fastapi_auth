@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PORT = 4000
+PORT = 80
 ENGINE = os.environ['ENGINE']
 ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = 'qwerty' 

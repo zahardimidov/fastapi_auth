@@ -63,6 +63,10 @@ jobs:
         run: chmod 600 id_rsa
 
       - name: Connect to host
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}  # Set this secret in your repository settings
+          USERNAME: ${{ secrets.SERVER_USERNAME }}  # Set this secret in your repository settings
+          PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}  # Set this secret in your repository settings
         run: ssh -i id_rsa $USERNAME@$HOST #"docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed
 
       - name: Show files

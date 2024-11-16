@@ -1,0 +1,60 @@
+name: Run tests on any Push event
+# Запуск при любом push евенте в любой ветке, за исключением релизных тэгов.
+# Они будт тестироваться перед сборкой
+on:
+  push:
+    branches:
+      - 'deploy'
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Чекаутим код
+      - uses: actions/checkout@master
+      # Устанавливаем python нужной версии
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.10'
+          architecture: 'x64'
+      - name: Install requirements
+        # Устанавливаем зависимости
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: coverage run -m pytest  
+      - name: Tests report
+        run: coverage report
+
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    needs: run_tests  # This job will only run if run_tests succeeds
+    steps:
+      # Check out the code again
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      # Set up Docker Buildx (optional, but recommended for better performance)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # Log in to Docker Hub (or your Docker registry)
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Set this secret in your repository settings
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Set this secret in your repository settings
+
+      # Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t fastapi_auth:latest .  # Replace with your image name
+
+      # Deploy the Docker image (example using SSH)
+      - name: Deploy to server
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}  # Set this secret in your repository settings
+          USERNAME: ${{ secrets.SERVER_USERNAME }}  # Set this secret in your repository settings
+          PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}  # Set this secret in your repository settings
+        run: |
+          echo "$PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem $USERNAME@$HOST "docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed

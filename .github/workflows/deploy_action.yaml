@@ -54,19 +54,16 @@ jobs:
           HOST: ${{ secrets.SERVER_HOST }}  # Set this secret in your repository settings
           USERNAME: ${{ secrets.SERVER_USERNAME }}  # Set this secret in your repository settings
           PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}  # Set this secret in your repository settings
-        run: echo "$PRIVATE_KEY" > id_rsa
+        run: echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
 
       - name: Cat file
-        run: cat id_rsa
+        run: cat ~/.ssh/id_rsa
 
       - name: Set file permissions
-        run: chmod 600 id_rsa
+        run: chmod 600 ~/.ssh/id_rsa
 
       - name: Connect to host
-        env:
-          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
-          DOCKER_PWD: ${{ secrets.DOCKER_PWD }}
-        run: ssh -i id_rsa root@94.198.217.245 "ls -la" #"echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin && docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed
+        run: ssh -i ~/.ssh/id_rsa root@94.198.217.245 "ls -la" #"echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin && docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed
 
       - name: Show files
         run: ls -la

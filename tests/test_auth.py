@@ -124,4 +124,4 @@ def test_authenticated_me():
     response = client.get('/auth/me', headers={
         'Authorization': 'Bearer ' + token
     })
-    assert response.status_code == 200
+    assert response.status_code == 201

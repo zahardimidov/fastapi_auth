@@ -55,6 +55,6 @@ jobs:
           USERNAME: ${{ secrets.SERVER_USERNAME }}  # Set this secret in your repository settings
           PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}  # Set this secret in your repository settings
         run: |
-          echo "$PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-          ssh -i private_key.pem $USERNAME@$HOST "docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed
+          echo "$PRIVATE_KEY" > id_rsa
+          chmod 600 id_rsa
+          ssh -i id_rsa $USERNAME@$HOST "docker pull fastapi_auth:latest && docker run -d fastapi_auth:latest"  # Adjust deployment command as needed

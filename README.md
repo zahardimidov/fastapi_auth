@@ -47,6 +47,9 @@ Read [there](https://docs.docker.com/engine/install/ubuntu/#install-using-the-re
 3. Run the Docker container:
 <code>docker run -p 127.0.0.1:4500:4500 fastapi_auth:latest</code>
 
+4. Setup [nginx](https://medium.com/@deltarfd/how-to-set-up-nginx-on-ubuntu-server-fc392c88fb59):
+
+
 
 ## Test Coverage
 

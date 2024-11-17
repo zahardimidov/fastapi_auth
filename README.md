@@ -80,7 +80,6 @@ To create and set up an SSH key for accessing an existing server:
 3. Read and copy the public key:
 
 <code>cat ~/.ssh/id_rsa.pub
-
 echo "yourpublickey" >> ~/.ssh/authorized_keys</code>
 
 4. Ensure that the authorized_keys file has the correct permissions:
@@ -110,7 +109,6 @@ git push origin deploy
 git checkout main
 </code>
 
-<code>
-git add . && git commit -m "fix" && git push 
+<code>git add . && git commit -m "fix" && git push 
 git checkout deploy && git pull origin main && git push origin deploy && git checkout main
 </code>

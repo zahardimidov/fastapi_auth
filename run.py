@@ -38,7 +38,7 @@ async def ping():
 
 @app.get('/', response_class=HTMLResponse, include_in_schema=False)
 async def home():
-    return f'<div style="display: flex; width: 100vw; height: 100vh; font-size: 48px; justify-content: center; background-color: #F9F9F9; color: #03527E;"> <b style="margin-top:35vh">Welcome!</b> </div>'
+    return f'<div style="display: flex; width: 100vw; height: 100vh; font-size: 48px; justify-content: center; background-color: #F9F9F9; color: #03527E;"> <b style="margin-top:35vh">Hello world!</b> </div>'
 
 
 def prettify_operation_ids(app: FastAPI) -> None:

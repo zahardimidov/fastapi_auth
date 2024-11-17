@@ -72,6 +72,7 @@ jobs:
           port: 22
           script: |
             echo "${DOCKER_PWD}" | docker login -u "${DOCKER_LOGIN}" --password-stdin
+            docker stop $(docker ps -q --filter "publish=4000") || true
             docker pull zahardimidov/fastapi_auth:latest
             docker run -p 0.0.0.0:4000:4000 -d --restart unless-stopped zahardimidov/fastapi_auth:latest
 

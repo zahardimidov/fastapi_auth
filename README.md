@@ -79,8 +79,7 @@ To create and set up an SSH key for accessing an existing server:
 
 3. Read and copy the public key:
 
-<code>
-cat ~/.ssh/id_rsa.pub
+<code>cat ~/.ssh/id_rsa.pub
 
 echo "yourpublickey" >> ~/.ssh/authorized_keys</code>
 
@@ -101,8 +100,7 @@ Create instruction file for our CI/CD
 Write jobs for github branch" deploy": run_tests and deploy
 
 ### Important git commands
-<code>
-git push --force origin deploy
+<code>git push --force origin deploy
 git add .
 git commit -m "fix"
 git push

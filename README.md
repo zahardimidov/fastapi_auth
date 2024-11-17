@@ -64,7 +64,7 @@ Read [there](https://docs.docker.com/engine/install/ubuntu/#install-using-the-re
 
 5. Setup [nginx](https://medium.com/@deltarfd/how-to-set-up-nginx-on-ubuntu-server-fc392c88fb59): *
 
-* Optional
+\* \- Optional
 
 
 ## Create SSH Key for Existing Server
@@ -78,7 +78,9 @@ To create and set up an SSH key for accessing an existing server:
 <code>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code>
 
 3. Read and copy the public key:
-<code>cat ~/.ssh/id_rsa.pub
+
+<code>
+cat ~/.ssh/id_rsa.pub
 
 echo "yourpublickey" >> ~/.ssh/authorized_keys</code>
 
@@ -99,7 +101,8 @@ Create instruction file for our CI/CD
 Write jobs for github branch" deploy": run_tests and deploy
 
 ### Important git commands
-<code>git push --force origin deploy
+<code>
+git push --force origin deploy
 git add .
 git commit -m "fix"
 git push
@@ -107,7 +110,9 @@ git checkout deploy
 git pull origin main
 git push origin deploy
 git checkout main
+</code>
 
+<code>
 git add . && git commit -m "fix" && git push 
 git checkout deploy && git pull origin main && git push origin deploy && git checkout main
 </code>
